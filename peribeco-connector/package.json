@@ -1,9 +1,9 @@
 {
     "name": "peribeco-connector", 
     "license": "MPL 2.0", 
-    "author": "", 
+    "author": "Cooperativa Venezolana de Tecnologías Libres R.S."
     "version": "0.1", 
     "fullName": "peribeco-connector", 
-    "id": "jid1-QYhCBU5hETlxRA", 
-    "description": "a basic add-on"
+    "id": "peribeco-connector@covetel.com.ve", 
+    "description": "Peribeco Connector"
 }
