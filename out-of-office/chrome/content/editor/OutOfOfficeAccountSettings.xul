@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1/GPL 2.0/LGPL 2.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is Mozilla Communicator
+   -
+   - The Initial Developer of the Original Code is
+   -   BT Global Services / Etat francais Ministere de la Defense
+   - Portions created by the Initial Developer are Copyright (C) 2002
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -   Olivier Brun BT Global Services / Etat francais Ministere de la Defense
+   -
+   - Alternatively, the contents of this file may be used under the terms of
+   - either the GNU General Public License Version 2 or later (the "GPL"), or
+   - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+   - in which case the provisions of the GPL or the LGPL are applicable instead
+   - of those above. If you wish to allow use of your version of this file only
+   - under the terms of either the GPL or the LGPL, and not to allow others to
+   - use your version of this file under the terms of the MPL, indicate your
+   - decision by deleting the provisions above and replace them with the notice
+   - and other provisions required by the LGPL or the GPL. If you do not delete
+   - the provisions above, a recipient may use your version of this file under
+   - the terms of any one of the MPL, the GPL or the LGPL.
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<!DOCTYPE dialog [
+<!ENTITY % amSieveServerDTD SYSTEM "chrome://out_of_office/locale/locale.dtd">
+<!ENTITY % outofofficeDTD SYSTEM "chrome://out_of_office/locale/out_of_office_locale.dtd">
+%amSieveServerDTD;
+%outofofficeDTD;
+]>
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        buttons="accept,cancel"
+				onload="onDialogLoad(this);"
+				ondialogaccept="return onDialogAccept(this);"
+        style="width: 45em; height: 27em;"
+        title="&outofoffice.settings.title;">
+
+	<script type="application/x-javascript" src="chrome://out_of_office/content/libs/preferences.js" />
+	<script type="application/x-javascript" src="chrome://out_of_office/content/libs/misc.js" />
+	<script type="application/x-javascript" src="chrome://out_of_office/content/editor/OutOfOfficeManager.js"/>
+	<script type="application/x-javascript" src="chrome://out_of_office/content/editor/OutOfOfficeAccountSettings.js"/>
+	
+	<script type="application/x-javascript" src="chrome://global/content/inlineSpellCheckUI.js"/>
+	<script type="application/x-javascript" src="chrome://messenger/content/messengercompose/MsgComposeCommands.js"/>
+	<script type="application/x-javascript" src="chrome://messenger/content/messengercompose/addressingWidgetOverlay.js"/>
+
+	<vbox index="fromAdd" flex="1">
+	<hbox>
+		<grid>
+			<columns>
+				<column flex="1"/>
+			</columns>
+			<rows>
+				<row align="center" id="fromAddressesRow1">
+					<label id="labelOutOfOfficeFromAddresses" value="&outofoffice.from.address;" />
+					<textbox id="fromColTxt" class="plain textbox-addressingWidget uri-element" style="width: 25em;"
+						oninput="gContentChanged=true; onOutOfOfficeFromAddressInput(this);"
+						onchange="onOutOfOfficeFromAddressChange(this);" maxrows="3" flex="1">
+					</textbox>
+				</row>
+			</rows>
+		</grid>
+	</hbox>
+	</vbox>
+
+      <vbox index="other" flex="1">
+        <vbox id="customFields" class="alignBoxWithFieldset">
+          <hbox flex="1">
+			<groupbox flex="1">
+				<caption>          
+				  <checkbox id="outofofficeRedirectionCheckbox" label="&outofoffice.redirection;" accesskey="&outofoffice.redirection.key;" 
+          				oncommand="onOutOfOfficeRedirectionCommand(this)"/>
+				</caption>
+				<rows  >
+					<row align="center" >
+						<label id="labelOutOfOfficeDestinationAddress" value="&outofoffice.destination.address;" accesskey="&outofoffice.destination.address.key;" 
+						   					control="addressCol2#1"/>
+						<listbox id="addressingWidget" flex="1" seltype="multiple" rows="1"
+									onkeydown="awKeyDown(event, this)"
+									onclick="awClickEmptySpace(event.originalTarget, true)">
+							<listcols>
+								<listcol id="textcol-addressingWidget" flex="1"/>
+							</listcols>
+							<listitem class="addressingWidgetItem" allowevents="true">
+								<listcell class="addressingWidgetCell" align="stretch">
+									<textbox id="addressCol2#1" class="plain textbox-addressingWidget uri-element"
+											type="autocomplete" flex="1" 
+											searchSessions="addrbook" timeout="300" maxrows="3" 
+											autoFill="true" autoFillAfterMatch="true" forceComplete="true"
+											minResultsForPopup="3" ignoreBlurWhileSearching="true"
+											ontextentered="awRecipientTextCommand(eventParam, this)"
+											onerrorcommand="awRecipientErrorCommand(eventParam, this)"
+											oninput="gContentChanged=true; setupAutocomplete(); onOutOfOfficeDestinationAddressInput(this);" 
+											onchange="onOutOfOfficeDestinationAddressChange(this);"
+											onkeypress="awRecipientKeyPress(event, this);"
+											onkeydown="awRecipientKeyDown(event, this);">
+									</textbox>
+								</listcell>
+							</listitem>
+						</listbox>
+					</row>
+
+					<row align="center">
+						<checkbox id="outofofficeKeepMessageCheckbox" label="&outofoffice.keep.message;" accesskey="&outofoffice.keep.message.key;" 
+								oncommand="onOutOfOfficeKeepMessageCommand(this)"/>
+					</row>
+				</rows>
+			</groupbox>
+          </hbox>
+        </vbox>
+		<vbox flex="1">
+			<hbox flex="1">
+				<groupbox flex="1">
+					<caption>          
+						<checkbox id="outofofficeNotificationCheckbox" label="&outofoffice.notification;" accesskey="&outofoffice.notification.key;" 
+								oncommand="onOutOfOfficeNotificationCommand(this)"/>
+					</caption>
+					<textbox id="txtOutOfOfficeNotification" flex="1" multiline="true" wrap="virtual" onchange="onOutOfOfficeNotificationChange(this)"/>
+				</groupbox>
+			</hbox>
+		</vbox>
+
+		<groupbox id="gbError" hidden="true">
+			<caption>
+				<image src="chrome://sieve/content/images/syntaxError.png" width="16" height="16"/>
+				<label value="&edit.errorbar.title;"/>
+			</caption>
+			<textbox flex="1" id="lblError" multiline="true" rows="3" readonly="true" class="plain"/>
+		</groupbox>  
+    </vbox>
+  <label id="logger" value="" />
+  </dialog>

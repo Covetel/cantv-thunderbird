@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+	<rdf:Description about="urn:mozilla:install-manifest">
+
+		<em:id>peribeco@covetel.com.ve</em:id>
+		<em:name>Peribeco Connector</em:name>
+		<em:version>1.0</em:version>
+
+		<em:creator>Covetel</em:creator>
+		<em:homepageURL>http://www.covetel.com.ve/</em:homepageURL>
+		<em:iconURL>chrome://peribeco/content/images/logo_extension.png</em:iconURL>
+
+		<em:targetApplication>
+			<rdf:Description>
+				<!-- Thunderbird -->
+				<em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
+				<em:minVersion>2.0</em:minVersion>
+				<em:maxVersion>16.0</em:maxVersion>
+			</rdf:Description>
+		</em:targetApplication>
+
+		<em:localized>
+			<Description>
+				<em:locale>es-VE</em:locale>
+				<em:name>Conector Peribeco</em:name>
+				<em:description>Integración de Peribeco con el cliente de correo Thunderbird.</em:description>
+			</Description>
+		</em:localized>
+
+	</rdf:Description>
+</rdf:RDF>

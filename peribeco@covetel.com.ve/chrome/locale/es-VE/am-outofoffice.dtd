@@ -1,0 +1,6 @@
+<!ENTITY outOfOffice.label       "Opciones de fuera de oficina">
+<!ENTITY outOfOfficeEnable.label "Fuera de oficina">
+<!ENTITY enable.accesskey        "F">
+<!ENTITY enable.label            "Habilitar Fuera de Oficina">
+<!ENTITY notification.label      "Texto de notificación">
+<!ENTITY notification.defaultMsg "Me fui de vacaciones, regresaré pronto">
