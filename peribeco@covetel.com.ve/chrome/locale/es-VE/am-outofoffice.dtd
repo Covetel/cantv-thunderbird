@@ -1,6 +1,8 @@
-<!ENTITY outOfOffice.label       "Opciones de fuera de oficina">
+<!ENTITY peribeco.menu.title "CANTV">
+<!ENTITY peribeco.options.title "Opciones corporativas CANTV">
 <!ENTITY outOfOfficeEnable.label "Fuera de oficina">
-<!ENTITY enable.accesskey        "F">
-<!ENTITY enable.label            "Habilitar Fuera de Oficina">
+<!ENTITY outofoffice.label       "Opciones de fuera de oficina">
+<!ENTITY outofoffice.enable.accesskey        "F">
+<!ENTITY outofoffice.enable.label            "Habilitar Fuera de Oficina">
 <!ENTITY notification.label      "Texto de notificación">
 <!ENTITY notification.defaultMsg "Me fui de vacaciones, regresaré pronto">
