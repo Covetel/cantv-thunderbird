@@ -17,19 +17,19 @@
       title="&peribeco.menu.title;"
       onload="parent.onPanelLoaded('am-outofoffice.xul');">
 
-  <vbox flex="1" style="overflow: auto;">
+  <vbox flex="1" style="overflow: auto">
 	<script type="application/javascript" src="chrome://messenger/content/AccountManager.js"/>
 	<script type="application/javascript" src="chrome://peribeco/content/am-utils.js"/>
 	<script type="application/javascript" src="chrome://peribeco/content/am-peribeco.js"/>
  	<dialogheader title="&peribeco.options.title;"/>
-	<groupbox id="outofoffice-box">
+	<groupbox id="outofoffice-box" hidden="false">
 		<caption label="&outofoffice.label;"/>
 		<checkbox id="ooo-enable" oncommand="" accesskey="&outofoffice.enable.accesskey;" label="&outofoffice.enable.label;"/>
 		<textbox id="notification-text" multiline="true" value="&notification.defaultMsg;">
 			<observes element="ooo-enable" attribute="checked" onbroadcast="document.getElementById('notification-text').setAttribute('hidden',!document.getElementById('ooo-enable').checked)"/>
 		</textbox>
 	</groupbox>
-	<groupbox id="forward-box">
+<!--	<groupbox id="forward-box">
 		<caption label="Redirección de correo"/>
 			<hbox>
 				<listbox id="thelist" onselect="alert(this.selectedItem.label);" flex="1">
@@ -42,8 +42,8 @@
 					<button label="Delete" oncommand="addItem();" flex="0"/>
 				</vbox>
 			</hbox>
-	</groupbox>
-	<groupbox id="mailinglist-box" disabled="true">
+	</groupbox> -->
+<!--	<groupbox id="mailinglist-box" disabled="true">
 		<caption label="Administración de listas de correo"/>
 				<menulist flex="1">
 				  <menupopup>
@@ -53,7 +53,7 @@
 				  </menupopup>
 				</menulist>
 
-<!--
+
 			<hbox>
 
 				<listbox id="thelist" onselect="" flex="1">
@@ -64,12 +64,12 @@
 				<vbox flex="0">
 					<button label="Editar" oncommand="addItem();" flex="0"/>
 				</vbox>
-			</hbox>-->
+			</hbox>
 	</groupbox>
 	<groupbox id="loading-box" hidden="false">
 		<caption label="Estableciendo conexión con el servidor..."/>
 		<progressmeter mode="undetermined"/>
-	</groupbox>
+	</groupbox> -->
 
 
 

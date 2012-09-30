@@ -8,14 +8,18 @@ function onPreInit(account, accountvalues)  {
 
 function onInit(pageId, serverId)  { 
 	//alert(serverId);
+	//setVacationStatus("peribeco_session=e5fa191433b8a9bd5b7ea1e76ee5d1e4458051b1", 0, "probando nuevamente");
+	// FIXME: Corregir detalles de la autenticación
+	getVacationStatus("peribeco_session=e5fa191433b8a9bd5b7ea1e76ee5d1e4458051b1");
 }
 
 function onAcceptEditor() { 
-	//alert('pepe');
 } 
 
 function onSave() { 
-	//alert("Save");
+	setVacationStatus("peribeco_session=e5fa191433b8a9bd5b7ea1e76ee5d1e4458051b1", 
+			   (document.getElementById('ooo-enable').checked)? 1 : 0, 
+			    document.getElementById('notification-text').value);
 } 
 
 function UpdatePage() {
