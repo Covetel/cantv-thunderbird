@@ -22,57 +22,83 @@
 	<script type="application/javascript" src="chrome://peribeco/content/am-utils.js"/>
 	<script type="application/javascript" src="chrome://peribeco/content/am-peribeco.js"/>
  	<dialogheader title="&peribeco.options.title;"/>
-	<groupbox id="outofoffice-box" hidden="false">
+
+	<broadcasterset>
+	  <broadcaster id="outofoffice-state" disabled="true"/>
+	</broadcasterset>
+
+	<groupbox id="outofoffice-box" observes="outofoffice-state">
 		<caption label="&outofoffice.label;"/>
-		<checkbox id="ooo-enable" oncommand="" accesskey="&outofoffice.enable.accesskey;" label="&outofoffice.enable.label;"/>
-		<textbox id="notification-text" multiline="true" value="&notification.defaultMsg;">
-			<observes element="ooo-enable" attribute="checked" onbroadcast="document.getElementById('notification-text').setAttribute('hidden',!document.getElementById('ooo-enable').checked)"/>
-		</textbox>
+		<checkbox id="ooo-enable" oncommand="" accesskey="&outofoffice.enable.accesskey;" label="&outofoffice.enable.label;" observes="outofoffice-state"/>
+
+		<hbox flex="1">
+			<textbox id="notification-text" flex="1" multiline="true" value="&notification.defaultMsg;" observes="outofoffice-state">
+				<observes element="ooo-enable" attribute="checked" onbroadcast="document.getElementById('notification-text').setAttribute('hidden',!document.getElementById('ooo-enable').checked)"/>
+			</textbox>
+			<vbox>
+				<button flex="0" label="Guardar" observes="outofoffice-state"></button>
+			</vbox>
+		</hbox>
 	</groupbox>
-<!--	<groupbox id="forward-box">
+
+
+	<broadcasterset>
+	  <broadcaster id="forward-state" disabled="true"/>
+	</broadcasterset>
+
+	<groupbox id="forward-box" observes="forward-state">
 		<caption label="Redirección de correo"/>
 			<hbox>
-				<listbox id="thelist" onselect="alert(this.selectedItem.label);" flex="1">
-				  <listitem label="pedro@pdvsa.com"/>
-				  <listitem label="juan@corpoelec.com"/>
-				  <listitem label="jose@cantv.com"/>
-				</listbox>
-				<vbox flex="0">
-					<button label="Add" oncommand="addItem();" flex="0"/>
-					<button label="Delete" oncommand="addItem();" flex="0"/>
-				</vbox>
+				<textbox id="forward-email-textbox" flex="1" observes="forward-state"/>
+				<button id="forward-email-button" label="Agregar" oncommand="" flex="0" observes="forward-state"/>
 			</hbox>
-	</groupbox> -->
-<!--	<groupbox id="mailinglist-box" disabled="true">
-		<caption label="Administración de listas de correo"/>
-				<menulist flex="1">
-				  <menupopup>
-				    <menuitem label="Publicaciones ABA" value="l"/>
-				    <menuitem label="Contacto Diario" value="t"/>
-				    <menuitem label="GPITI" value="b"/>
-				  </menupopup>
-				</menulist>
-
-
 			<hbox>
-
-				<listbox id="thelist" onselect="" flex="1">
-				  <listitem label=""/>
-				  <listitem label=""/>
-				  <listitem label="GPITI"/>
+				<listbox id="forward-listbox" onselect="" flex="1" rows="5" seltype="multiple" observes="forward-state">
+					<listhead>
+						<listheader label="Correo electrónico" observes="forward-state"/>
+					</listhead>
 				</listbox>
 				<vbox flex="0">
-					<button label="Editar" oncommand="addItem();" flex="0"/>
+					<button label="Eliminar" oncommand="" flex="0" observes="forward-state"/>
+					<spacer flex="1"/>
+					<button label="Guardar" oncommand="" flex="0" observes="forward-state"/>
 				</vbox>
 			</hbox>
 	</groupbox>
+
+	<broadcasterset>
+	  <broadcaster id="mailinglist-state" disabled="true"/>
+	</broadcasterset>
+
+	<groupbox id="mailinglist-box" disabled="true" observes="mailinglist-state">
+		<caption label="Administración de listas de correo"/>
+			<hbox>
+				<menulist id="mailinglist-name-listbox" flex="1" observes="mailinglist-state">
+					<menupopup>
+					</menupopup>
+				</menulist>
+
+			</hbox>
+			<hbox>
+				<textbox id="mailinglist-email-textbox" flex="1" observes="mailinglist-state"/>
+				<button id="mailinglist-email-button" label="Agregar" oncommand="" flex="0" observes="mailinglist-state"/>
+			</hbox>
+			<hbox>
+				<listbox id="mailinglist-listbox" onselect="" flex="1" rows="5" seltype="multiple" observes="mailinglist-state">
+					<listhead>
+						<listheader label="Correo electrónico" observes="mailinglist-state"/>
+					</listhead>
+				</listbox>
+				<vbox flex="0">
+					<button label="Eliminar" oncommand="" flex="0" observes="mailinglist-state"/>
+					<spacer flex="1"/>
+					<button label="Guardar" oncommand="" flex="0" observes="forward-state"/>
+				</vbox>
+			</hbox>
+	</groupbox> 
 	<groupbox id="loading-box" hidden="false">
 		<caption label="Estableciendo conexión con el servidor..."/>
 		<progressmeter mode="undetermined"/>
-	</groupbox> -->
-
-
-
-
+	</groupbox>
   </vbox>
 </page>
