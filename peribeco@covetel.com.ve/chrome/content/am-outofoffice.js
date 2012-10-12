@@ -1,23 +1,37 @@
-function onPreInit(account, accountvalues)  {
-	//Application.console.log("El password es:" + account.incomingServer.password);
-	//alert(getUsername(account.incomingServer));
-	//account.incomingServer.getPasswordWithUI("pregunta", "titulo", this, true);
-	//console.log(accountvalues);
-
+// Get all the settings related to the extension as global variables
+function getSettings()
+{
 }
 
-function onInit(pageId, serverId)  { 
-	//alert(serverId);
+// Check connection to server, returns true if succeed
+function connectToServer()
+{
 }
 
-function onAcceptEditor() { 
-	//alert('pepe');
-} 
-
-function onSave() { 
-	//alert("Save");
-} 
-
-function UpdatePage() {
-	//alert("update");
+// Update values for each group element in the tab. 
+function updateUI(element, data)
+{
 }
+
+// Display informative message in the bottom of the tab
+function logMsg(message)
+{
+}
+
+function setOutOfOffice(active, message)
+{
+}
+
+function getOutOfOffice()
+{
+}
+
+function setMailingLists(active, message)
+{
+}
+
+function getMailingLists()
+{
+}
+
+

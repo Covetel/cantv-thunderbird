@@ -32,11 +32,9 @@
 		<checkbox id="ooo-enable" oncommand="" accesskey="&outofoffice.enable.accesskey;" label="&outofoffice.enable.label;" observes="outofoffice-state"/>
 
 		<hbox flex="1">
-			<textbox id="notification-text" flex="1" multiline="true" value="&notification.defaultMsg;" observes="outofoffice-state">
-				<observes element="ooo-enable" attribute="checked" onbroadcast="document.getElementById('notification-text').setAttribute('hidden',!document.getElementById('ooo-enable').checked)"/>
-			</textbox>
+			<textbox id="notification-text" flex="1" multiline="true"/>
 			<vbox>
-				<button flex="0" label="Guardar" observes="outofoffice-state"></button>
+				<button flex="0" label="Guardar" observes="outofoffice-state" oncommand="setOutOfOfficeSettings()"></button>
 			</vbox>
 		</hbox>
 	</groupbox>
@@ -77,28 +75,30 @@
 					<menupopup>
 					</menupopup>
 				</menulist>
-
 			</hbox>
 			<hbox>
 				<textbox id="mailinglist-email-textbox" flex="1" observes="mailinglist-state"/>
 				<button id="mailinglist-email-button" label="Agregar" oncommand="" flex="0" observes="mailinglist-state"/>
 			</hbox>
 			<hbox>
-				<listbox id="mailinglist-listbox" onselect="" flex="1" rows="5" seltype="multiple" observes="mailinglist-state">
+				<listbox id="mailinglist-listbox" flex="1" rows="5" observes="mailinglist-state">
 					<listhead>
 						<listheader label="Correo electrónico" observes="mailinglist-state"/>
 					</listhead>
 				</listbox>
 				<vbox flex="0">
-					<button label="Eliminar" oncommand="" flex="0" observes="mailinglist-state"/>
+					<button label="Eliminar" oncommand="removeFromMailList();" flex="0" observes="mailinglist-state"/>
 					<spacer flex="1"/>
 					<button label="Guardar" oncommand="" flex="0" observes="forward-state"/>
 				</vbox>
 			</hbox>
 	</groupbox> 
 	<groupbox id="loading-box" hidden="false">
-		<caption label="Estableciendo conexión con el servidor..."/>
-		<progressmeter mode="undetermined"/>
+		<label id="progress-msg" value="Estableciendo conexión con el servidor..." style="text-align:center"/>
+		<progressmeter id="progress" mode="undetermined"/>
+	</groupbox>
+	<groupbox id="message-box" flex="1" hidden="true" >
+		<label id="message-msg" value="pepe" flex="0" style="background-color:red;text-align:center;"/>
 	</groupbox>
   </vbox>
 </page>
