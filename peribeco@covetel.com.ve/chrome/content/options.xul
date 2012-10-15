@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+  
+<prefwindow id="peribeco-prefs"
+     title="Opciones peribeco"
+     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  
+<prefpane id="peribeco-pref-pane" label="Configuracion">
+
+  <preferences>
+    <preference id="pref_server_url" name="extensions.peribeco.server.url" type="string" instantApply="true"/>
+    <preference id="pref_mail_domains" name="extensions.peribeco.mail.allowed.domains" type="string" instantApply="true"/>
+    <preference id="pref_enable_ooo" name="extensions.peribeco.outofoffice.enabled" type="bool" instantApply="true"/>
+    <preference id="pref_enable_mailinglist" name="extensions.peribeco.mailinglist.enabled" type="bool" instantApply="true"/>
+    <preference id="pref_enable_forward" name="extensions.peribeco.forwardmail.enabled" type="bool" instantApply="true"/>
+  </preferences>
+  
+  <vbox>
+	<groupbox id="server-box" flex="1">
+		<caption label="Opciones del servidor"/>
+			<label control="server_url" value="URL del servidor"/>
+			<textbox preference="pref_server_url" id="server_url"/>
+	</groupbox>
+	<groupbox id="modules-box" flex="1">
+		<caption label="Modulos activos"/>
+		<hbox>
+			<checkbox preference="pref_enable_ooo" id="ooo-enable"/>
+			<label control="ooo-enable" value="Fuera de oficina"/>
+		</hbox>
+		<hbox>
+			<checkbox preference="pref_enable_mailinglist" id="ml-enable"/>
+			<label control="ml-enable" value="Listas de correo"/>
+		</hbox>
+		<hbox>
+	 		<checkbox preference="pref_enable_forward" id="fm-enable"/>
+			<label control="fm-enable" value="Reenvio de correo"/>
+		</hbox>
+	</groupbox>
+	<groupbox id="misc-box" flex="1">
+		<caption label="Otras opciones"/>
+		<label control="mail_domains" value="Dominios de correo permitidos"/>
+		<textbox preference="pref_mail_domains" id="mail_domains"/>
+	</groupbox>
+  </vbox>
+
+</prefpane>
+  
+</prefwindow>

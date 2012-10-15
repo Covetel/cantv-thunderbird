@@ -12,7 +12,8 @@ function onInit(pageId, serverId)  {
 	//document.getElementById('outofoffice-box').setAttribute("disabled", "true");
 	//getVacationStatus("peribeco_session=e5fa191433b8a9bd5b7ea1e76ee5d1e4458051b1");
 	//loadSettings();
-	connectToServer();
+	//connectToServer();
+	peribeco.init();
 }
 
 function onAcceptEditor() { 

@@ -10,6 +10,7 @@
 		<em:creator>Covetel</em:creator>
 		<em:homepageURL>http://www.covetel.com.ve/</em:homepageURL>
 		<em:iconURL>chrome://peribeco/content/images/logo_extension.png</em:iconURL>
+		<em:optionsURL>chrome://peribeco/content/options.xul</em:optionsURL>
 
 		<em:targetApplication>
 			<rdf:Description>

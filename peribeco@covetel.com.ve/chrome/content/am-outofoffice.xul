@@ -20,6 +20,7 @@
   <vbox flex="1" style="overflow: auto">
 	<script type="application/javascript" src="chrome://messenger/content/AccountManager.js"/>
 	<script type="application/javascript" src="chrome://peribeco/content/am-utils.js"/>
+	<script type="application/javascript" src="chrome://peribeco/content/am-peribeco-obj.js"/>
 	<script type="application/javascript" src="chrome://peribeco/content/am-peribeco.js"/>
  	<dialogheader title="&peribeco.options.title;"/>
 
@@ -34,11 +35,10 @@
 		<hbox flex="1">
 			<textbox id="notification-text" flex="1" multiline="true"/>
 			<vbox>
-				<button flex="0" label="Guardar" observes="outofoffice-state" oncommand="setOutOfOfficeSettings()"></button>
+				<button flex="0" label="Guardar" observes="outofoffice-state" oncommand="peribeco.setOutOfOfficeSettings()"></button>
 			</vbox>
 		</hbox>
 	</groupbox>
-
 
 	<broadcasterset>
 	  <broadcaster id="forward-state" disabled="true"/>
@@ -47,8 +47,8 @@
 	<groupbox id="forward-box" observes="forward-state">
 		<caption label="Redirección de correo"/>
 			<hbox>
-				<textbox id="forward-email-textbox" flex="1" observes="forward-state"/>
-				<button id="forward-email-button" label="Agregar" oncommand="" flex="0" observes="forward-state"/>
+				<textbox id="forward-email-textbox" flex="1"/>
+				<button id="forward-email-button" label="Agregar" oncommand="peribeco.addToMailForward()" flex="0" observes="forward-state"/>
 			</hbox>
 			<hbox>
 				<listbox id="forward-listbox" onselect="" flex="1" rows="5" seltype="multiple" observes="forward-state">
@@ -57,9 +57,9 @@
 					</listhead>
 				</listbox>
 				<vbox flex="0">
-					<button label="Eliminar" oncommand="" flex="0" observes="forward-state"/>
+					<button label="Eliminar" oncommand="peribeco.removeFromMailForward()" flex="0" observes="forward-state"/>
 					<spacer flex="1"/>
-					<button label="Guardar" oncommand="" flex="0" observes="forward-state"/>
+					<button label="Guardar" oncommand="peribeco.setMailForwardSettings()" flex="0" observes="forward-state"/>
 				</vbox>
 			</hbox>
 	</groupbox>
@@ -77,8 +77,8 @@
 				</menulist>
 			</hbox>
 			<hbox>
-				<textbox id="mailinglist-email-textbox" flex="1" observes="mailinglist-state"/>
-				<button id="mailinglist-email-button" label="Agregar" oncommand="" flex="0" observes="mailinglist-state"/>
+				<textbox id="mailinglist-email-textbox" flex="1"/>
+				<button id="mailinglist-email-button" label="Agregar" oncommand="peribeco.addToMailingLists();" flex="0" observes="mailinglist-state"/>
 			</hbox>
 			<hbox>
 				<listbox id="mailinglist-listbox" flex="1" rows="5" observes="mailinglist-state">
@@ -87,9 +87,9 @@
 					</listhead>
 				</listbox>
 				<vbox flex="0">
-					<button label="Eliminar" oncommand="removeFromMailList();" flex="0" observes="mailinglist-state"/>
+					<button label="Eliminar" oncommand="peribeco.removeFromMailingLists();" flex="0" observes="mailinglist-state"/>
 					<spacer flex="1"/>
-					<button label="Guardar" oncommand="" flex="0" observes="forward-state"/>
+					<button label="Guardar" oncommand="peribeco.setMailingListsSettings();" flex="0" observes="mailinglist-state"/>
 				</vbox>
 			</hbox>
 	</groupbox> 
