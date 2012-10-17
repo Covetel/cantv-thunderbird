@@ -6,10 +6,20 @@ var peribeco =  {
 	ooEnabled: false,
 	mlEnabled: false,
 	mfEnabled: false,
+	account: null,
 	init: function()
 	{
 		this.loadSettings();
-		this.connect();
+	
+		// check if the current account is valid for the extension
+		/*if (!validateDomain(getUsername(this.account), this.mailDomains))
+			return false;*/
+
+		if (this.authenticate())
+			this.connect();
+		else
+			$('loading-box').setAttribute("hidden", true);
+
 	},
 	loadSettings: function()
 	{
@@ -27,6 +37,43 @@ var peribeco =  {
 		this.ooEnabled = prefs.getBoolPref("outofoffice.enabled");
 		this.mfEnabled = prefs.getBoolPref("forwardmail.enabled");
 		this.mlEnabled = prefs.getBoolPref("mailinglist.enabled");
+	},
+	authenticate: function()
+	{
+		var user = getUsername(this.account).split("@")[0];	
+		$('loading-box').setAttribute("hidden", false);
+
+		var pwd = getPassword(this.account);
+
+		if(pwd == null) {
+
+			var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+					        .getService(Components.interfaces.nsIPromptService);
+
+			var input = {value:null};
+			var check = {value:false};
+			var title = "Introduzca la contraseña";
+			var label = "Introduzca la contraseña";
+			var result = prompts.promptPassword(window,title, label, input, null, check);
+
+			prompts = null;
+
+			if (result) {
+				pwd = input.value;
+			} 
+
+			else return false;
+		}
+
+		var request = new XMLHttpRequest();
+		request.open("POST", this.serverURL + "/login/", false);
+		request.send(JSON.stringify({username: user, password: pwd}));
+			
+		if (request.status === 200) {
+			console.log(request.getAllResponseHeaders());
+		}	
+	
+		return false;
 	},
 	connect: function()
 	{
@@ -77,6 +124,10 @@ var peribeco =  {
 
 			break;
 		}
+	},
+	setAccount: function(account)
+	{
+		this.account = account;
 	},
 	getOutOfOfficeSettings: function()
 	{

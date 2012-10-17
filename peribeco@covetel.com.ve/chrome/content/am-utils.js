@@ -57,6 +57,19 @@ function validateEmail(str)
     return (lastAtPos < lastDotPos && lastAtPos > 0 && str.indexOf('@@') == -1 && lastDotPos > 2 && (str.length - lastDotPos) > 2);
 }
 
+function getPassword(account)
+{
+  if (account.passwordPromptRequired == false)
+	return account.password;
+  else 
+	return null;
+}
+
+function getUsername(account)
+{
+        return account.realUsername;
+}
+
 // helper functions, http get request
 function get(url, onload, onerror, cookie)
 {

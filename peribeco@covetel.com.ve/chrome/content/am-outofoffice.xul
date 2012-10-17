@@ -93,7 +93,7 @@
 				</vbox>
 			</hbox>
 	</groupbox> 
-	<groupbox id="loading-box" hidden="false">
+	<groupbox id="loading-box" hidden="true">
 		<label id="progress-msg" value="Estableciendo conexión con el servidor..." style="text-align:center"/>
 		<progressmeter id="progress" mode="undetermined"/>
 	</groupbox>

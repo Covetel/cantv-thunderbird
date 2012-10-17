@@ -1,0 +1,6 @@
+content         peribeco   jar:chrome/peribeco.jar!/content/
+locale          peribeco   es-VE   jar:chrome/peribeco.jar!/locale/es-VE/
+
+component {06a487a9-4e76-439f-bb04-0a9d9999857e} components/outofoffice.js
+contract @mozilla.org/accountmanager/extension;1?name=outofoffice {06a487a9-4e76-439f-bb04-0a9d9999857e}
+category mailnews-accountmanager-extensions outofoffice-accountmanager-extension @mozilla.org/accountmanager/extension;1?name=outofoffice
