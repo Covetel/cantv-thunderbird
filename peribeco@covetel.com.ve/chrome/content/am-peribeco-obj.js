@@ -40,10 +40,13 @@ var peribeco =  {
 	},
 	authenticate: function()
 	{
-		var user = getUsername(this.account).split("@")[0];	
+		//var user = getUsername(this.account).split("@")[0];	
 		$('loading-box').setAttribute("hidden", false);
 
-		var pwd = getPassword(this.account);
+		//var pwd = getPassword(this.account);
+
+		var user = 'emujic';
+		var pwd  = '123321...';
 
 		if(pwd == null) {
 
@@ -65,13 +68,20 @@ var peribeco =  {
 			else return false;
 		}
 
-		var request = new XMLHttpRequest();
+		var request =  Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
 		request.open("POST", this.serverURL + "/login/", false);
-		request.send(JSON.stringify({username: user, password: pwd}));
+	 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.send('login='+user+'&passw='+pwd);
 			
 		if (request.status === 200) {
-			console.log(request.getAllResponseHeaders());
-		}	
+			Application.console.log(request.getAllResponseHeaders());
+			Application.console.log(request.responseText);
+		
+		}
+		else
+		{
+			Application.console.log("error");
+		}
 	
 		return false;
 	},
@@ -131,11 +141,6 @@ var peribeco =  {
 	},
 	getOutOfOfficeSettings: function()
 	{
-		//DEBUG: debug
-		$('loading-box').setAttribute("hidden", true);
-		this.updateUI('outofoffice', '{"vacation": 1,"message": "me fui de vacatas"}');
-
-		/* UNCOMMENT WHEN SERVER IS UP		
 		get(this.serverURL + "/rest/vacation/",
 			function(aEvent) {
 				$('loading-box').setAttribute("hidden", true);
@@ -153,18 +158,14 @@ var peribeco =  {
 					break;
 				}
 			},
-			this.authCookie);*/
+			this.authCookie);
 	},
 	setOutOfOfficeSettings: function()
 	{
 		var data = JSON.stringify({vacation: ($('ooo-enable').checked)?1 : 0, message : ($('ooo-enable').checked)?$('notification-text').value : 0}); 
 		$('loading-box').setAttribute("hidden", false);
 
-		//DEBUG
-		alert(data);
-		$('loading-box').setAttribute("hidden", true);						
-
-		/*post(this.serverURL + "/rest/vacation/", 
+		post(this.serverURL + "/rest/vacation/", 
 			function(aEvent) {
 				$('loading-box').setAttribute("hidden", true);
 			},
@@ -178,15 +179,10 @@ var peribeco =  {
 						logMsg("El certificado de seguridad del servidor no es valido", true);
 					break;
 				}
-			}, data, this.authCookie);*/
+			}, data, this.authCookie);
 	},
 	getMailForwardSettings: function()
 	{
-		//DEBUG: debug
-		$('loading-box').setAttribute("hidden", true);
-		this.updateUI('mailforward', '["gmujic@cantv.com.ve","ovaler@cantv.com.ve","lmarqu@cantv.com.ve","walter@cantv.com.ve","carlos@cantv.com.ve"]');
-
-		/*
 		get(this.serverURL + "/rest/mailforward/", 
 		function(aEvent) {
 				$('loading-box').setAttribute("hidden", true);
@@ -204,7 +200,7 @@ var peribeco =  {
 					break;
 				}
 			},
-			this.authCookie);*/
+			this.authCookie);
 	},
 	setMailForwardSettings: function()
 	{
@@ -216,11 +212,7 @@ var peribeco =  {
 		var data = JSON.stringify(array); 
 		$('loading-box').setAttribute("hidden", false);
 
-		//DEBUG
-		alert(data);
-		$('loading-box').setAttribute("hidden", true);						
-
-		/*post(this.serverURL + "/rest/mailforward/", 
+		post(this.serverURL + "/rest/mailforward/", 
 			function(aEvent) {
 				$('loading-box').setAttribute("hidden", true);
 			},
@@ -234,15 +226,10 @@ var peribeco =  {
 						logMsg("El certificado de seguridad del servidor no es valido", true);
 					break;
 				}
-			}, data, this.authCookie);*/
+			}, data, this.authCookie);
 	},
 	getMailingListsSettings: function()
 	{
-		//DEBUG: debug
-		$('loading-box').setAttribute("hidden", true);
-		this.updateUI('mailinglist', '[{"members":["gmujic@cantv.com.ve","ovaler@cantv.com.ve","lmarqu@cantv.com.ve","walter@cantv.com.ve","carlos@cantv.com.ve"],"cn":"ProyectoADSL","mail":"aba@cantv.com.ve","sendmailMTAKey":"aba"},{"members":["gmujic@cantv.com.ve","ovaler@cantv.com.ve","lmarqu@cantv.com.ve"],"cn":"ProyectoADSL","mail":"abacopy@cantv.com.ve","sendmailMTAKey":"aba"}]');
-
-		/*
 		get(this.serverURL + "/rest/maillist/", 
 		function(aEvent) {
 				$('loading-box').setAttribute("hidden", true);
@@ -260,7 +247,7 @@ var peribeco =  {
 					break;
 				}
 			},
-			this.authCookie);*/
+			this.authCookie);
 	},
 	addToMailForward: function()
 	{
@@ -296,11 +283,7 @@ var peribeco =  {
 		var data = JSON.stringify(this.mailingLists); 
 		$('loading-box').setAttribute("hidden", false);
 
-		//DEBUG
-		alert(data);
-		$('loading-box').setAttribute("hidden", true);						
-
-		/*post(this.serverURL + "/rest/maillist/", 
+		post(this.serverURL + "/rest/maillist/", 
 			function(aEvent) {
 				$('loading-box').setAttribute("hidden", true);
 			},
@@ -314,7 +297,7 @@ var peribeco =  {
 						logMsg("El certificado de seguridad del servidor no es valido", true);
 					break;
 				}
-			}, data, this.authCookie);*/
+			}, data, this.authCookie);
 
 	},
 	refreshMailingLists: function()
