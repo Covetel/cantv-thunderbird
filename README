@@ -1,6 +1,13 @@
 Conector de Peribeco para Thunderbird
 
 Compilación:
+	
+	Requerimientos:
+		
+		En sistemas debian instale:
+			
+			mozilla-devscripts
+
 
 Instalación:
 

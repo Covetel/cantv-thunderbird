@@ -16,7 +16,10 @@ var peribeco =  {
 			return false;*/
 
 		if (this.authenticate())
+		{
 			this.connect();
+			Application.console.log("Exito!!");		
+		}
 		else
 			$('loading-box').setAttribute("hidden", true);
 
@@ -40,13 +43,9 @@ var peribeco =  {
 	},
 	authenticate: function()
 	{
-		//var user = getUsername(this.account).split("@")[0];	
+		var user = getUsername(this.account).split("@")[0];	
 		$('loading-box').setAttribute("hidden", false);
-
-		//var pwd = getPassword(this.account);
-
-		var user = 'emujic';
-		var pwd  = '123321...';
+		var pwd = getPassword(this.account);
 
 		if(pwd == null) {
 
@@ -68,19 +67,15 @@ var peribeco =  {
 			else return false;
 		}
 
-		var request =  Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
-		request.open("POST", this.serverURL + "/login/", false);
+		var request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
+		request.open("POST", this.serverURL + "/login", false);
 	 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		request.send('login='+user+'&passw='+pwd);
-			
+		request.withCredentials = true;
+		request.send('login='+user+'&passw='+pwd+'&Botones.submit=Ingresar');
+
 		if (request.status === 200) {
-			Application.console.log(request.getAllResponseHeaders());
-			Application.console.log(request.responseText);
-		
-		}
-		else
-		{
-			Application.console.log("error");
+			this.authCookie = (request.getAllResponseHeaders().match(/(?:Set-Cookie: )[a-zA-z0-9_=]*/) + '').split(" ")[1];
+			return true;
 		}
 	
 		return false;
@@ -141,66 +136,56 @@ var peribeco =  {
 	},
 	getOutOfOfficeSettings: function()
 	{
-		get(this.serverURL + "/rest/vacation/",
-			function(aEvent) {
-				$('loading-box').setAttribute("hidden", true);
-				// Everything Ok, updating UI
-				this.updateUI('outofoffice', aEvent.target.responseText);
-			},
-			function(aEvent){
+		var request = get(this.serverURL + "/rest/vacation/", this.authCookie);		
 
-				var status = aEvent.target.status;
-				switch (status)
-				{
-					// SSL Certificate problem (invalid)
-					case 0:
-						logMsg("El certificado de seguridad del servidor no es valido", true);
-					break;
-				}
-			},
-			this.authCookie);
+		$('loading-box').setAttribute("hidden", true);
+
+		switch(request.status)
+		{
+			case 0:
+				logMsg("El certificado de seguridad del servidor no es valido", true);				
+			break;
+			case 200:
+				this.updateUI('outofoffice', request.responseText);
+			break;
+		}
+
 	},
 	setOutOfOfficeSettings: function()
 	{
 		var data = JSON.stringify({vacation: ($('ooo-enable').checked)?1 : 0, message : ($('ooo-enable').checked)?$('notification-text').value : 0}); 
+
 		$('loading-box').setAttribute("hidden", false);
 
-		post(this.serverURL + "/rest/vacation/", 
-			function(aEvent) {
-				$('loading-box').setAttribute("hidden", true);
-			},
-			function(aEvent){
-				$('loading-box').setAttribute("hidden", true);
-				var status = aEvent.target.status;
-				switch (status)
-				{
-					// SSL Certificate problem (invalid)
-					case 0:
-						logMsg("El certificado de seguridad del servidor no es valido", true);
-					break;
-				}
-			}, data, this.authCookie);
+		var request = post(this.serverURL + "/rest/vacation/", data, this.authCookie);		
+
+		$('loading-box').setAttribute("hidden", true);
+
+		switch(request.status)
+		{
+			case 0:
+				logMsg("El certificado de seguridad del servidor no es valido", true);				
+			break;
+			case 200:
+				// TODO BIEN
+			break;
+		}
 	},
 	getMailForwardSettings: function()
 	{
-		get(this.serverURL + "/rest/mailforward/", 
-		function(aEvent) {
-				$('loading-box').setAttribute("hidden", true);
-				// Everything Ok, updating UI
-				this.updateUI('mailforward', aEvent.target.responseText);
-			},
-			function(aEvent){
+		var request = get(this.serverURL + "/rest/mailforward/", this.authCookie);		
 
-				var status = aEvent.target.status;
-				switch (status)
-				{
-					// SSL Certificate problem (invalid)
-					case 0:
-						logMsg("El certificado de seguridad del servidor no es valido", true);
-					break;
-				}
-			},
-			this.authCookie);
+		$('loading-box').setAttribute("hidden", true);
+
+		switch(request.status)
+		{
+			case 0:
+				logMsg("El certificado de seguridad del servidor no es valido", true);				
+			break;
+			case 200:
+				this.updateUI('mailforward', request.responseText);
+			break;
+		}
 	},
 	setMailForwardSettings: function()
 	{
@@ -209,45 +194,40 @@ var peribeco =  {
 			array.push($('forward-listbox').getItemAtIndex(i).value);
 		}
 
-		var data = JSON.stringify(array); 
+		var data = JSON.stringify({ localcopy:($('mf-localcopy').checked)? 1 : 0, forward:array}); 
+
+		Application.console.log(data);
 		$('loading-box').setAttribute("hidden", false);
 
-		post(this.serverURL + "/rest/mailforward/", 
-			function(aEvent) {
-				$('loading-box').setAttribute("hidden", true);
-			},
-			function(aEvent){
-				$('loading-box').setAttribute("hidden", true);
-				var status = aEvent.target.status;
-				switch (status)
-				{
-					// SSL Certificate problem (invalid)
-					case 0:
-						logMsg("El certificado de seguridad del servidor no es valido", true);
-					break;
-				}
-			}, data, this.authCookie);
+		var request = post(this.serverURL + "/rest/mailforward/", data, this.authCookie);		
+
+		$('loading-box').setAttribute("hidden", true);
+
+		switch(request.status)
+		{
+			case 0:
+				logMsg("El certificado de seguridad del servidor no es valido", true);				
+			break;
+			case 200:
+				// TODO BIEN
+			break;
+		}
 	},
 	getMailingListsSettings: function()
 	{
-		get(this.serverURL + "/rest/maillist/", 
-		function(aEvent) {
-				$('loading-box').setAttribute("hidden", true);
-				// Everything Ok, updating UI
-				this.updateUI('mailinglist', aEvent.target.responseText);
-			},
-			function(aEvent){
+		var request = get(this.serverURL + "/rest/maillist/", this.authCookie);		
 
-				var status = aEvent.target.status;
-				switch (status)
-				{
-					// SSL Certificate problem (invalid)
-					case 0:
-						logMsg("El certificado de seguridad del servidor no es valido", true);
-					break;
-				}
-			},
-			this.authCookie);
+		$('loading-box').setAttribute("hidden", true);
+
+		switch(request.status)
+		{
+			case 0:
+				logMsg("El certificado de seguridad del servidor no es valido", true);				
+			break;
+			case 200:
+				this.updateUI('mailinglist', request.responseText);
+			break;
+		}
 	},
 	addToMailForward: function()
 	{
@@ -281,24 +261,28 @@ var peribeco =  {
 	setMailingListsSettings: function()
 	{
 		var data = JSON.stringify(this.mailingLists); 
+
+		Application.console.log(data);
+
 		$('loading-box').setAttribute("hidden", false);
 
-		post(this.serverURL + "/rest/maillist/", 
-			function(aEvent) {
-				$('loading-box').setAttribute("hidden", true);
-			},
-			function(aEvent){
-				$('loading-box').setAttribute("hidden", true);
-				var status = aEvent.target.status;
-				switch (status)
-				{
-					// SSL Certificate problem (invalid)
-					case 0:
-						logMsg("El certificado de seguridad del servidor no es valido", true);
-					break;
-				}
-			}, data, this.authCookie);
+		var request = post(this.serverURL + "/rest/maillist/", data, this.authCookie);		
 
+		$('loading-box').setAttribute("hidden", true);
+
+		switch(request.status)
+		{
+			case 0:
+				logMsg("El certificado de seguridad del servidor no es valido", true);				
+			break;
+			case 200:
+				Application.console.log(request.responseText);
+				// TODO BIEN
+			break;
+			case 500:
+				Application.console.log("Error de la aplicacion");
+			break;
+		}
 	},
 	refreshMailingLists: function()
 	{

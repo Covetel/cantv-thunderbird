@@ -62,7 +62,7 @@
 					<button label="Guardar" oncommand="peribeco.setMailForwardSettings()" flex="0" observes="forward-state"/>
 				</vbox>
 			</hbox>
-			<checkbox id="mf-local-copy" label="Mantener una copia local de los correos reenviados" observes="forward-state"/>
+			<checkbox id="mf-localcopy" label="Mantener una copia local de los correos reenviados" observes="forward-state"/>
 
 	</groupbox>
 

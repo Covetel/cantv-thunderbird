@@ -71,25 +71,23 @@ function getUsername(account)
 }
 
 // helper functions, http get request
-function get(url, onload, onerror, cookie)
+function get(url, cookie)
 {
 	var request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
-	request.onload = onload;
-	request.onerror = onerror;
-	request.open("GET", url, true);
+	request.open("GET", url, false);
 	request.setRequestHeader("Cookie", cookie);
 	request.setRequestHeader("Content-Type", "application/json");
 	request.send(null);
+	return request;
 }
 
 // helper functions, http post request
-function post(url, onload, onerror, data, cookie)
+function post(url, data, cookie)
 {
 	var request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
-	request.onload = onload;
-	request.onerror = onerror;
-	request.open("POST", url, true);
+	request.open("POST", url, false);
 	request.setRequestHeader("Cookie", cookie);
 	request.setRequestHeader("Content-Type", "application/json");
 	request.send(data);	
+	return request;
 }
