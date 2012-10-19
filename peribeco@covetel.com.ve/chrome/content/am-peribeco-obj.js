@@ -320,9 +320,15 @@ var peribeco =  {
 		if (prompts.confirm(window, "Eliminar elementos", "Desea eliminar la direccion de correo seleccionada de la lista?")) {
 
 			for(var i in items) {
-				var idx = $('mailinglist-listbox').getIndexOfItem(items[i]);
-				$('mailinglist-listbox').removeItemAt(idx);
-				this.mailingLists[index].members.splice(idx, 1);
+
+				if(items[i].value == getUsername(this.account)) {
+					alert("No es posible eliminar el administrador de la lista!");
+				}
+				else {
+					var idx = $('mailinglist-listbox').getIndexOfItem(items[i]);
+					$('mailinglist-listbox').removeItemAt(idx);
+					this.mailingLists[index].members.splice(idx, 1);
+				}
 			}
 		}
 	}
