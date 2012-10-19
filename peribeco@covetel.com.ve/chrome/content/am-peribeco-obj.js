@@ -70,7 +70,6 @@ var peribeco =  {
 		var request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
 		request.open("POST", this.serverURL + "/login", false);
 	 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		request.withCredentials = true;
 		request.send('login='+user+'&passw='+pwd+'&Botones.submit=Ingresar');
 
 		if (request.status === 200) {
