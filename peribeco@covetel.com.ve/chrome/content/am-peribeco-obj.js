@@ -116,16 +116,13 @@ var peribeco =  {
 			break;
 			case 'mailforward':
 
-				var mails = JSON.parse(data);
+				var mail = JSON.parse(data);
 
-				if (mails.length > 0) {
+				$('forward-state').setAttribute("disabled", false);
+				$('mf-localcopy').checked = (mail.localcopy == 0) ? false : true;
 
-					$('forward-state').setAttribute("disabled", false);
-
-					for (var i = 0; i < mails.length; i++)
-						$('forward-listbox').appendItem(mails[i], mails[i]);
-				}
-
+				for (var i = 0; i < mail.forward.length; i++)
+					$('forward-listbox').appendItem(mail.forward[i], mail.forward[i]);
 			break;
 		}
 	},
