@@ -172,7 +172,7 @@ var peribeco =  {
 	},
 	getMailForwardSettings: function()
 	{
-		var request = get(this.serverURL + "/rest/mailforward/", this.authCookie);		
+		var request = get(this.serverURL + "/rest/forwards/", this.authCookie);		
 
 		$('loading-box').setAttribute("hidden", true);
 
@@ -198,7 +198,7 @@ var peribeco =  {
 		Application.console.log(data);
 		$('loading-box').setAttribute("hidden", false);
 
-		var request = post(this.serverURL + "/rest/mailforward/", data, this.authCookie);		
+		var request = post(this.serverURL + "/rest/forwards/", data, this.authCookie);		
 
 		$('loading-box').setAttribute("hidden", true);
 
