@@ -36,11 +36,6 @@
 			<label control="fm-enable" value="Reenvio de correo"/>
 		</hbox>
 	</groupbox>
-	<groupbox id="misc-box" flex="1">
-		<caption label="Otras opciones"/>
-		<label control="mail_domains" value="Dominios de correo permitidos"/>
-		<textbox preference="pref_mail_domains" id="mail_domains"/>
-	</groupbox>
   </vbox>
 
 </prefpane>

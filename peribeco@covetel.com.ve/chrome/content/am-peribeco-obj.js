@@ -12,8 +12,8 @@ var peribeco =  {
 		this.loadSettings();
 	
 		// check if the current account is valid for the extension
-		/*if (!validateDomain(getUsername(this.account), this.mailDomains))
-			return false;*/
+		if (!validateDomain(getUsername(this.account), this.mailDomains))
+			return false;
 
 		if (this.authenticate())
 		{
@@ -47,6 +47,11 @@ var peribeco =  {
 		$('loading-box').setAttribute("hidden", false);
 		var pwd = getPassword(this.account);
 
+		var user = 'ninja6';
+		var pwd  = "123321...";
+
+		Application.console.log("autenticando...");
+
 		if(pwd == null) {
 
 			var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
@@ -77,6 +82,8 @@ var peribeco =  {
 			return true;
 		}
 	
+		Application.console.log(request.status);
+
 		return false;
 	},
 	connect: function()
