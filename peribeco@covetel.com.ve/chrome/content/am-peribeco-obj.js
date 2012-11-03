@@ -17,8 +17,7 @@ var peribeco =  {
 
 		if (this.authenticate())
 		{
-			this.connect();
-			Application.console.log("Exito!!");		
+			this.connect();	
 		}
 		else
 			$('loading-box').setAttribute("hidden", true);
@@ -46,11 +45,6 @@ var peribeco =  {
 		var user = getUsername(this.account).split("@")[0];	
 		$('loading-box').setAttribute("hidden", false);
 		var pwd = getPassword(this.account);
-
-		var user = 'ninja6';
-		var pwd  = "123321...";
-
-		Application.console.log("autenticando...");
 
 		if(pwd == null) {
 
@@ -82,7 +76,6 @@ var peribeco =  {
 			return true;
 		}
 	
-		Application.console.log(request.status);
 
 		return false;
 	},
@@ -199,7 +192,6 @@ var peribeco =  {
 
 		var data = JSON.stringify({ localcopy:($('mf-localcopy').checked)? 1 : 0, forward:array}); 
 
-		Application.console.log(data);
 		$('loading-box').setAttribute("hidden", false);
 
 		var request = post(this.serverURL + "/rest/forwards/", data, this.authCookie);		
@@ -263,9 +255,7 @@ var peribeco =  {
 	},
 	setMailingListsSettings: function()
 	{
-		var data = JSON.stringify(this.mailingLists); 
-
-		Application.console.log(data);
+		var data = JSON.stringify(this.mailingLists);
 
 		$('loading-box').setAttribute("hidden", false);
 
