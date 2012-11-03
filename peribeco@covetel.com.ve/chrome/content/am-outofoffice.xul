@@ -30,10 +30,9 @@
 
 	<groupbox id="outofoffice-box" observes="outofoffice-state">
 		<caption label="&outofoffice.label;"/>
-		<checkbox id="ooo-enable" oncommand="" accesskey="&outofoffice.enable.accesskey;" label="&outofoffice.enable.label;" observes="outofoffice-state"/>
-
+		<checkbox id="ooo-enable" oncommand="$('notification-text').setAttribute('hidden', !this.checked);" accesskey="&outofoffice.enable.accesskey;" label="&outofoffice.enable.label;" observes="outofoffice-state"/>
 		<hbox flex="1">
-			<textbox id="notification-text" flex="1" multiline="true" observes="ooo-enable"/>
+			<textbox id="notification-text" flex="1" multiline="true"/>
 			<vbox>
 				<button flex="0" label="Guardar" observes="outofoffice-state" oncommand="peribeco.setOutOfOfficeSettings()"></button>
 			</vbox>

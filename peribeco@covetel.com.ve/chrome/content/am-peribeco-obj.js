@@ -12,8 +12,8 @@ var peribeco =  {
 		this.loadSettings();
 	
 		// check if the current account is valid for the extension
-		if (!validateDomain(getUsername(this.account), this.mailDomains))
-			return false;
+		/*if (!validateDomain(getUsername(this.account), this.mailDomains))
+			return false;*/
 
 		if (this.authenticate())
 		{
@@ -45,6 +45,10 @@ var peribeco =  {
 		var user = getUsername(this.account).split("@")[0];	
 		$('loading-box').setAttribute("hidden", false);
 		var pwd = getPassword(this.account);
+
+
+		user = "emujic";
+		pwd  = "123456";
 
 		if(pwd == null) {
 
@@ -98,6 +102,7 @@ var peribeco =  {
 				$('outofoffice-state').setAttribute("disabled", false);
 				$('ooo-enable').checked = (status.vacation == 0) ? false : true;
 				$('notification-text').value = (status.message == 0) ? "" : status.message;
+				$('notification-text').setAttribute('hidden', !$('ooo-enable').checked);
 			break;
 			case 'mailinglist':
 				this.mailingLists = JSON.parse(data);
