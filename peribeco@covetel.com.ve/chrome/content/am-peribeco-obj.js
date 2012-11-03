@@ -12,8 +12,8 @@ var peribeco =  {
 		this.loadSettings();
 	
 		// check if the current account is valid for the extension
-		/*if (!validateDomain(getUsername(this.account), this.mailDomains))
-			return false;*/
+		if (!validateDomain(getUsername(this.account), this.mailDomains))
+			return false;
 
 		if (this.authenticate())
 		{
@@ -45,10 +45,6 @@ var peribeco =  {
 		var user = getUsername(this.account).split("@")[0];	
 		$('loading-box').setAttribute("hidden", false);
 		var pwd = getPassword(this.account);
-
-
-		user = "emujic";
-		pwd  = "123456";
 
 		if(pwd == null) {
 
