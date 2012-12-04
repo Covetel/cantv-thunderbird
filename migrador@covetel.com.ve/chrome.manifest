@@ -1,0 +1,3 @@
+content         migrador   chrome/content/
+locale          migrador   es-VE   chrome/locale/es-VE/
+overlay		chrome://messenger/content/messenger.xul chrome://migrador/content/migrador-overlay.xul
