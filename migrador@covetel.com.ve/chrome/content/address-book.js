@@ -15,9 +15,6 @@ var ABookMigrator = {
 		this.removeAddressBooks();
 		this.createAddressBooks();
 
-		//FIXME: Pasar al AccountManager
-		this.setCredentials();
-
 		this.nManager.registerObserver("groupdav.synchronization.stop", { 
 			handleNotification: function(notification, data) {
 				ABookMigrator.nManager.unregisterObserver("groupdav.synchronization.stop", this);
@@ -59,49 +56,6 @@ var ABookMigrator = {
 
 		this.inputAb = SCCreateGroupDAVDirectory("input", inputURL);
 		this.outputAb = SCCreateGroupDAVDirectory(prefs.getCharPref("addressbook.name"), outputURL);
-	},
-	//TODO: Delete credentials when migration is finished
-	setCredentials: function() {
-
-		var passwordManager = Components.classes["@mozilla.org/login-manager;1"].getService(Components.interfaces.nsILoginManager);
-		var nsLoginInfo = new Components.Constructor("@mozilla.org/login-manager/loginInfo;1", Components.interfaces.nsILoginInfo, "init");
-
-		var prefs = Components.classes["@mozilla.org/preferences-service;1"]
-					.getService(Components.interfaces.nsIPrefService)
-					.getBranch("extensions.migration.");	
-
-		var password = AccountManager.getPassword();
-
-		//TODO: Get url from preferences.
-
-		// input service
-		var authLoginInfoServer1 = new nsLoginInfo(
-		    'http://localhost:1080',
-		    null,
-		    'DavMail Gateway',
-		    AccountManager.getUsername(),
-		    password,
-		    "",
-		    ""
-		);
-	
-		// output service
-		var authLoginInfoServer2 = new nsLoginInfo(
-		    'https://190.142.238.79:8081',
-		    null,
-		    'SOGo',
-		    /*DEBUG AccountManager.getUsername()*/"emujic",
-		    /*DEBUG: password */"123456",
-		    "",
-		    ""
-		);
-
-		if (!passwordManager.getLoginSavingEnabled("http://localhost:1080"))
-			passwordManager.addLogin(authLoginInfoServer1);
-		if (!passwordManager.getLoginSavingEnabled("https://190.142.238.79:8081"))
-		passwordManager.addLogin(authLoginInfoServer2); 
-
-
 	},
    	copyAddressBook: function() {
 
