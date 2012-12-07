@@ -14,7 +14,10 @@ var ABookMigrator = {
 	start: function(resume) {
 		this.removeAddressBooks();
 		this.createAddressBooks();
+
+		//FIXME: Pasar al AccountManager
 		this.setCredentials();
+
 		this.nManager.registerObserver("groupdav.synchronization.stop", { 
 			handleNotification: function(notification, data) {
 				ABookMigrator.nManager.unregisterObserver("groupdav.synchronization.stop", this);
