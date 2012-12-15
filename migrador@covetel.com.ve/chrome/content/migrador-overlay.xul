@@ -17,6 +17,7 @@
 <script type="application/javascript" src="chrome://migrador/content/account.js"/>
 <script type="application/javascript" src="chrome://migrador/content/address-book.js"/>
 <script type="application/javascript" src="chrome://migrador/content/calendar.js"/>
+<script type="application/javascript" src="chrome://migrador/content/maildownload.js"/>
 
 <script type="application/javascript" src="chrome://migrador/content/migrador.js"/>
 

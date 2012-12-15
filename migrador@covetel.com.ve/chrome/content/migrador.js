@@ -3,14 +3,15 @@ function migrateAddressBook() {
 
 	AccountManager.init();
 
-	// AddressBook migration
 	/*ABookMigrator.init();
-	ABookMigrator.start();*/
-
-	
-	//exportEntireCalendar();
+	ABookMigrator.start();
 	CalendarMigrator.init();
 	CalendarMigrator.start();
+	MailDownloader.init();
+	MailDownloader.start();
+*/
 
+	/*ServerMigrator.init();
+	ServerMigrator.start();*/
 
 }

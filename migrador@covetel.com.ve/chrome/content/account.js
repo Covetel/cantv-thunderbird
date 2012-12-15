@@ -1,4 +1,5 @@
 var AccountManager = {
+	account : null,
 	username : null,
 	password : null,
 	domain : null,
@@ -26,6 +27,7 @@ var AccountManager = {
 
 				if (domain == validDomain)
 				{
+					this.account = account;
 					this.username = account.incomingServer.realUsername;
 					this.domain = domain;
 
