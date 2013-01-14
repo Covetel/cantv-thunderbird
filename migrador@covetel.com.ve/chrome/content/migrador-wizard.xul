@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+ 
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+ 
+<wizard id="migration-wizard" title="Asistente de migración de cuentas"	
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  onwizardcancel="return wizardCancel()"
+  onwizardfinish="return restartBaby()">
+
+	<!-- Lightning Helper functions -->
+	<script type="application/javascript" src="chrome://calendar/content/calUtils.js"/>
+
+	<!-- SOGO Helper functions -->
+	<script type="application/javascript" src="chrome://sogo-connector/content/addressbook/preference.service.addressbook.groupdav.js"/>
+	<script type="application/javascript" src="chrome://sogo-connector/content/addressbook/messenger.groupdav.overlay.js"/>
+	<script type="application/javascript" src="chrome://sogo-connector/content/addressbook/folder-handling.js"/>
+
+	<!-- Core functions -->
+	<script type="application/javascript" src="chrome://migrador/content/account.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/address-book.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/calendar.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/maildownload.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/settings.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/dummy.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/migrador.js"/>
+
+	<wizardpage onpageshow="return wizardLoadAccounts()" onpageadvanced="return wizardSelectAccount()">
+		<label value="Seleccione la cuenta a migrar:"/>
+		<menulist id="account-list">
+			<menupopup>
+				<menuitem label="Seleccione"/>
+			</menupopup>
+		</menulist>
+	</wizardpage>
+ 	<wizardpage onpageshow="return wizardLockProperties()">
+			<vbox flex="1"/>
+			<hbox flex="1">
+				<label value="Migrando contactos:" flex="1" />
+				<vbox>
+					<progressmeter id="contacts-progress" flex="0" mode="undetermined" hidden="true"/>
+				</vbox>
+				<label id="contacts-status" value="---"/>				
+			</hbox>
+			<hbox flex="1">
+				<label value="Migrando calendario:" flex="1" />
+				<vbox>
+					<progressmeter id="calendar-progress" mode="undetermined" hidden="true"/>
+				</vbox>		
+				<label id="calendar-status" value="---"/>				
+			</hbox>
+			<hbox flex="1">
+				<label value="Respaldo buzón de correo:" flex="1" />
+				<vbox>		
+					<progressmeter id="mailbox-progress" mode="undetermined" hidden="true"/>
+				</vbox>
+				<label id="mailbox-status" value="---"/>				
+			</hbox>
+			<hbox flex="1">
+				<label value="Migración de configuración:" flex="1" />
+				<vbox>
+					<progressmeter id="config-progress" mode="undetermined" hidden="true"/>
+				</vbox>
+				<label id="config-status" value="---"/>				
+			</hbox>
+			<hbox flex="1">
+				<label value="Verificación de configuración:"  flex="1" />
+				<vbox>
+					<progressmeter id="check-progress" mode="undetermined" hidden="true"/>
+				</vbox>
+				<label id="check-status" value="---"/>				
+			</hbox>
+			<vbox flex="1"/>
+			<progressmeter id="progress" value="0" mode="determined" flex="0"/>
+
+	</wizardpage>
+ 	<wizardpage onpageshow="">
+		<label value="Finalizado la migración de información a su nuevo buzón de correo"/>
+		<label value="a continuación Thunderbird se reiniciará"/>
+	</wizardpage>
+
+</wizard>

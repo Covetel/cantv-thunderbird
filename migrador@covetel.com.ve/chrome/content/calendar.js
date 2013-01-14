@@ -2,18 +2,30 @@ Components.utils.import("resource://calendar/modules/calUtils.jsm");
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 Components.utils.import("resource://gre/modules/FileUtils.jsm");
 
+const MODE_RDONLY   = 0x01;
+const MODE_WRONLY   = 0x02;
+const MODE_RDWR     = 0x04;
+const MODE_CREATE   = 0x08;
+const MODE_APPEND   = 0x10;
+const MODE_TRUNCATE = 0x20;
+const MODE_SYNC     = 0x40;
+const MODE_EXCL     = 0x80;
+
 var CalendarMigrator = {
 	cManager : null,
 	tmpFile : null,
 	inputCalendar: null,
 	outputCalendar: null,
 	tmpFile: null,
-	init: function() {
+	eventHandler: null,
+	init: function(handler) {
 		this.cManager =  Components.classes["@mozilla.org/calendar/manager;1"]
                      		.getService(Components.interfaces.calICalendarManager);
-
+		this.eventHandler = handler;	
 	},
 	start: function(){
+
+		this.eventHandler.onStart();
 		this.removeCalendars();
 		this.createCalendars();
 
@@ -57,6 +69,8 @@ var CalendarMigrator = {
 					.getBranch("extensions.migration.");	
 
 		var inputURL = prefs.getCharPref("calendar.input.url").replace("#USER", AccountManager.getUsername());
+		//var outputURL = "http://sogo-demo.inverse.ca/SOGo/dav/sogo3/Calendar/personal";
+		//#DEBUG
 		var outputURL = prefs.getCharPref("calendar.output.url").replace("#USER", AccountManager.getUsername());
 
 		inputURL = inputURL.replace("#DOMAIN", AccountManager.getDomain());
@@ -89,7 +103,12 @@ var CalendarMigrator = {
 					exporter.exportToStream(outputStream, itemArray.length, itemArray, null);
 					outputStream.close();
 
-				} catch(Exception){ dump(Exception) }
+				} catch(Exception){ 
+					dump(Exception);
+					/*CalendarMigrator.eventHandler.onError();
+					CalendarMigrator.eventHandler.onStop();*/
+					return;
+				}
 
 				CalendarMigrator.importCalendar();
 			},
@@ -114,14 +133,16 @@ var CalendarMigrator = {
 		let items = [];
 		
 		try {
-
-			//DEBUG
-			dump("Cargando items desde el archivo\n");
-			
             		inputStream.init(this.tmpFile, MODE_RDONLY, parseInt("0444", 8), {});
            	 	items = importer.importFromStream(inputStream, {});
 		}
 		catch(Exception) {
+
+			/*CalendarMigrator.eventHandler.onError();
+			CalendarMigrator.eventHandler.onStop();
+			return;*/
+
+			dump(Exception);
 
 		} finally {
 			inputStream.close();
@@ -129,15 +150,7 @@ var CalendarMigrator = {
 			try {
 				this.tmpFile.remove(false);
 			} catch(ex){ dump(ex)}
-
-			//DEBUG
-			dump("Finalizado: carga desde archivo\n");
-
 		}
-
-
-	    	// Set batch for the undo/redo transaction manager
-	    	startBatchTransaction();
 
 	        // And set batch mode on the calendar, to tell the views to not
 	        // redraw until all items are imported
@@ -167,8 +180,12 @@ var CalendarMigrator = {
 			        	}
 			    	}
 			    	// See if it is time to end the calendar's batch.
-			    	if (count == items.length) {
-			        	CalendarMigrator.outputCalendar.endBatch();
+			    	if (count == items.length) {		        	
+					CalendarMigrator.outputCalendar.endBatch();
+					/*CalendarMigrator.eventHandler.onError();
+					CalendarMigrator.eventHandler.onStop();*/
+					return;			
+
 			        	if (!failedCount && duplicateCount) {
 			            		showError(calGetString("calendar", "duplicateError", [duplicateCount, aFilePath]));
 			        	} else if (failedCount) {
@@ -193,7 +210,15 @@ var CalendarMigrator = {
 			}
 		}
 
-		// End transmgr batch	
-		endBatchTransaction();		
+		CalendarMigrator.eventHandler.onSuccess();
+		CalendarMigrator.eventHandler.onStop();
+
+		try {
+			this.cManager.unregisterCalendar(this.inputCalendar);
+			this.cManager.deleteCalendar(this.inputCalendar);					
+		}
+		catch(Exception){ dump(Exception); }
+
+
 	}
 }

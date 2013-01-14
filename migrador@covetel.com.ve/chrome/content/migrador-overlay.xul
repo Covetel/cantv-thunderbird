@@ -4,28 +4,12 @@
 <overlay id="migrador-overlay"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-<!-- Lightning Helper functions -->
-<!--<script type="application/javascript" src="chrome://calendar/content/import-export.js"/>-->
-<script type="application/javascript" src="chrome://calendar/content/calUtils.js"/>
-
-
-<!-- SOGO Helper functions -->
-<script type="application/javascript" src="chrome://sogo-connector/content/general/preference.service.addressbook.groupdav.js"/>
-<script type="application/javascript" src="chrome://sogo-connector/content/general/messenger.groupdav.overlay.js"/>
-<script type="application/javascript" src="chrome://sogo-connector/content/general/folder-handling.js"/>
-<!-- Core functions -->
-<script type="application/javascript" src="chrome://migrador/content/account.js"/>
-<script type="application/javascript" src="chrome://migrador/content/address-book.js"/>
-<script type="application/javascript" src="chrome://migrador/content/calendar.js"/>
-<script type="application/javascript" src="chrome://migrador/content/maildownload.js"/>
-
 <script type="application/javascript" src="chrome://migrador/content/migrador.js"/>
-
     <menupopup id="taskPopup">
         <menuseparator/>
         <menu id="migrador-init" label="Migrar cuenta...">
             <menupopup id="migrador-menu-popup">
-                <menuitem label="Iniciar migración" oncommand="migrateAddressBook()"/>
+                <menuitem label="Iniciar migración" oncommand="showMigrationWizard()"/>
             </menupopup>
         </menu>
     </menupopup>

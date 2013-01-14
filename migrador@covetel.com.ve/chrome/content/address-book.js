@@ -3,15 +3,20 @@ var ABookMigrator = {
 	nManager: null,
 	inputAb : null,
 	outputAb : null,
-	init: function() {
+	eventHandler: null,
+	init: function(handler) {
 		this.abManager = Components.classes["@mozilla.org/abmanager;1"]
 		                 .getService(Components.interfaces.nsIAbManager);
 
 		this.nManager = Components.classes["@inverse.ca/notification-manager;1"]
 				     .getService(Components.interfaces.inverseIJSNotificationManager)
 				     .wrappedJSObject;
+
+		ABookMigrator.eventHandler = handler;
 	},
-	start: function(resume) {
+	start: function() {
+
+		ABookMigrator.eventHandler.onStart();
 		this.removeAddressBooks();
 		this.createAddressBooks();
 
@@ -19,9 +24,14 @@ var ABookMigrator = {
 			handleNotification: function(notification, data) {
 				ABookMigrator.nManager.unregisterObserver("groupdav.synchronization.stop", this);
 				ABookMigrator.copyAddressBook();
-				SynchronizeGroupdavAddressbook(ABookMigrator.outputAb.URI, null, null);
+				let OutputSynchronizer = new GroupDavSynchronizer(ABookMigrator.outputAb.URI, false);
+				OutputSynchronizer.callback = ABookMigrator.OutputABSynchronizeCallback;
+				OutputSynchronizer.start();
 			}});
-		startFolderSync();
+
+		let synchronizer = new GroupDavSynchronizer(ABookMigrator.inputAb.URI, false);
+		synchronizer.callback = ABookMigrator.InputABSynchronizeCallback;
+		synchronizer.start();
 	},
 	removeAddressBooks: function() {
 		
@@ -98,5 +108,21 @@ var ABookMigrator = {
 				}
 		        }
 		}
+	},
+	InputABSynchronizeCallback: function(url, code, failures)
+	{
+		if (code != 200) {
+			ABookMigrator.eventHandler.onError();
+			ABookMigrator.eventHandler.onStop();		
+		}
+	},
+	OutputABSynchronizeCallback: function(url, code, failures)
+	{
+		try {
+			SCDeleteDAVDirectory(ABookMigrator.inputAb.URI);
+		} catch(e) { dump(e) };
+
+		ABookMigrator.eventHandler.onSuccess();
+		ABookMigrator.eventHandler.onStop();		
 	}
 };
