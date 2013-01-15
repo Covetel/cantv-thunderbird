@@ -28,29 +28,39 @@ function wizardStart(step) {
 		case 1:
 			Application.console.log("Migrando contactos");
 			MigratorHandler.init("contacts", 1);
-			ABookMigrator.init(MigratorHandler);
-			ABookMigrator.start();
+/*			ABookMigrator.init(MigratorHandler);
+			ABookMigrator.start();*/
+			DummyMigrator.init(MigratorHandler);
+			DummyMigrator.start();
 		break;
 		// Calendar migration
 		case 2:
 			Application.console.log("Migrando calendario");
 			MigratorHandler.init("calendar", 2);
-			CalendarMigrator.init(MigratorHandler);
-			CalendarMigrator.start();
+/*			CalendarMigrator.init(MigratorHandler);
+			CalendarMigrator.start();*/
+			SettingsMigrator.init(MigratorHandler);
+			SettingsMigrator.start();
 		break;
 		// Mailbox migration
 		case 3:
 			Application.console.log("Migrando mailbox");
 			MigratorHandler.init("mailbox", 3);
-		        MailDownloader.init(MigratorHandler);
-			MailDownloader.start();
+/*		        MailDownloader.init(MigratorHandler);
+			MailDownloader.start();*/
+			DummyMigrator.init(MigratorHandler);
+			DummyMigrator.start();
+
 		break;
 		// Settings migration	
 		case 4:
 			Application.console.log("Migrando settings");
 			MigratorHandler.init("config", 4);
-			SettingsMigrator.init(MigratorHandler);
-			SettingsMigrator.start();
+/*			SettingsMigrator.init(MigratorHandler);
+			SettingsMigrator.start();*/
+			DummyMigrator.init(MigratorHandler);
+			DummyMigrator.start();
+
 		break;
 		// Verify migration
 		case 5:
@@ -70,7 +80,6 @@ function wizardStop() {
 	{
 		var wizard = document.getElementById('migration-wizard');
 		wizard.canAdvance = true;
-		wizard.advance();
 		wizard.canRewind = false;
 	}
 }

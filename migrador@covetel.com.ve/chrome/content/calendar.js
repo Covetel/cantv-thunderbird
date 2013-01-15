@@ -69,8 +69,8 @@ var CalendarMigrator = {
 					.getBranch("extensions.migration.");	
 
 		var inputURL = prefs.getCharPref("calendar.input.url").replace("#USER", AccountManager.getUsername());
-		//var outputURL = "http://sogo-demo.inverse.ca/SOGo/dav/sogo3/Calendar/personal";
 		//#DEBUG
+		//var outputURL = "http://sogo-demo.inverse.ca/SOGo/dav/sogo3/Calendar/personal";
 		var outputURL = prefs.getCharPref("calendar.output.url").replace("#USER", AccountManager.getUsername());
 
 		inputURL = inputURL.replace("#DOMAIN", AccountManager.getDomain());

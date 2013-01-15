@@ -62,7 +62,7 @@ var AccountManager = {
 			serviceUrl,
 			null,
 			'SOGo',
-		    	AccountManager.getUsername()  + "@" + AccountManager.getDomain(),
+		    	AccountManager.getUsername()/*  + "@" + AccountManager.getDomain()*/,
 			AccountManager.getPassword(),
 		    	'',
 			'');
