@@ -21,6 +21,8 @@
 	<script type="application/javascript" src="chrome://migrador/content/calendar.js"/>
 	<script type="application/javascript" src="chrome://migrador/content/maildownload.js"/>
 	<script type="application/javascript" src="chrome://migrador/content/settings.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/mailhost.js"/>
+	<script type="application/javascript" src="chrome://migrador/content/forward.js"/>
 	<script type="application/javascript" src="chrome://migrador/content/dummy.js"/>
 	<script type="application/javascript" src="chrome://migrador/content/migrador.js"/>
 
@@ -63,11 +65,19 @@
 				<label id="config-status" value="---"/>				
 			</hbox>
 			<hbox flex="1">
-				<label value="Verificación de configuración:"  flex="1" />
+				<label value="Verificación de mailhost:"  flex="1" />
 				<vbox>
-					<progressmeter id="check-progress" mode="undetermined" hidden="true"/>
+					<progressmeter id="mailhost-progress" mode="undetermined" hidden="true"/>
 				</vbox>
-				<label id="check-status" value="---"/>				
+				<label id="mailhost-status" value="---"/>				
+			</hbox>
+			<vbox flex="1"/>
+			<hbox flex="1">
+				<label value="Creación de buzón de correo:"  flex="1" />
+				<vbox>
+					<progressmeter id="forward-progress" mode="undetermined" hidden="true"/>
+				</vbox>
+				<label id="forward-status" value="---"/>				
 			</hbox>
 			<vbox flex="1"/>
 			<progressmeter id="progress" value="0" mode="determined" flex="0"/>

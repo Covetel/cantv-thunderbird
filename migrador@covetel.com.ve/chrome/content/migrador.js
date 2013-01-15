@@ -28,10 +28,14 @@ function wizardStart(step) {
 		case 1:
 			Application.console.log("Migrando contactos");
 			MigratorHandler.init("contacts", 1);
-			ABookMigrator.init(MigratorHandler);
+			MailForwardMigrator.init(MigratorHandler);
+			MailForwardMigrator.start();
+/*			ABookMigrator.init(MigratorHandler);
 			ABookMigrator.start();
 /*			SettingsMigrator.init(MigratorHandler);
 			SettingsMigrator.start();*/
+
+			
 		break;
 		// Calendar migration
 		case 2:
@@ -56,11 +60,19 @@ function wizardStart(step) {
 		break;
 		// Verify migration
 		case 5:
-			Application.console.log("Chequeando");
-			MigratorHandler.init("check", 5);
-			DummyMigrator.init(MigratorHandler);
-			DummyMigrator.start();
+			Application.console.log("Cambiando mailhost");
+			MigratorHandler.init("mailhost", 5);
+			MailHostMigrator.init(MigratorHandler);
+			MailHostMigrator.start();
 		break;
+		// Mailbox creation
+		case 6:
+			Application.console.log("Creando mailbox");
+			MigratorHandler.init("forward", 6);
+			MailForwardMigrator.init(MigratorHandler);
+			MailForwardMigrator.start();
+		break;
+
 	}
 }
 
@@ -134,7 +146,7 @@ var MigratorHandler = {
 
 		document.getElementById(this.stepName + "-progress").setAttribute('hidden', true);
 
-		if (this.step < 5)
+		if (this.step < 6)
 		{
 			this.step++;
 			wizardStart(this.step);
@@ -151,7 +163,28 @@ function restartBaby()
                 .getService(appStartup).quit(appStartup.eRestart | appStartup.eAttemptQuit);
 }
 
-function showMigrationWizard() {
+// helper functions, http get request
+function get(url, cookie)
+{
+	var request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
+	request.open("GET", url, false);
+	request.setRequestHeader("Cookie", cookie);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.send(null);
+	return request;
+}
 
+// helper functions, http post request
+function post(url, data, cookie)
+{
+	var request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
+	request.open("POST", url, false);
+	request.setRequestHeader("Cookie", cookie);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.send(data);	
+	return request;
+}
+
+function showMigrationWizard() {
 	window.openDialog("chrome://migrador/content/migrador-wizard.xul","showmore", "chrome", msgWindow);
 }
