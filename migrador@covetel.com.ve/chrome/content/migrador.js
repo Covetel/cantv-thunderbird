@@ -30,8 +30,8 @@ function wizardStart(step) {
 			MigratorHandler.init("contacts", 1);
 /*			ABookMigrator.init(MigratorHandler);
 			ABookMigrator.start();*/
-			DummyMigrator.init(MigratorHandler);
-			DummyMigrator.start();
+			SettingsMigrator.init(MigratorHandler);
+			SettingsMigrator.start();
 		break;
 		// Calendar migration
 		case 2:
@@ -39,8 +39,8 @@ function wizardStart(step) {
 			MigratorHandler.init("calendar", 2);
 /*			CalendarMigrator.init(MigratorHandler);
 			CalendarMigrator.start();*/
-			SettingsMigrator.init(MigratorHandler);
-			SettingsMigrator.start();
+			DummyMigrator.init(MigratorHandler);
+			DummyMigrator.start();
 		break;
 		// Mailbox migration
 		case 3:
@@ -160,5 +160,6 @@ function restartBaby()
 }
 
 function showMigrationWizard() {
+
 	window.openDialog("chrome://migrador/content/migrador-wizard.xul","showmore", "chrome", msgWindow);
 }

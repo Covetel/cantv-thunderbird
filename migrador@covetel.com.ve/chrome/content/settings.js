@@ -8,16 +8,30 @@ var SettingsMigrator = {
 
 		var prefs = Components.classes["@mozilla.org/preferences-service;1"]
 					.getService(Components.interfaces.nsIPrefService)
-					.getBranch("extensions.migration.settings.server");
 
-	/*	var incomingServer = AccountManager.account.incomingServer;
-		incomingServer.setCharValue("hostName", prefs.getCharPref("imap.hostname"));
-		incomingServer.setIntValue("port", prefs.getIntPref("imap.port"));
-
+		var imapBranch = prefs.getBranch("extensions.migration.settings.server.imap.");
+		var smtpBranch = prefs.getBranch("extensions.migration.settings.server.smtp.");
+	
+		var incomingServer = AccountManager.account.incomingServer;
 		var outgoingServer = AccountManager.account.defaultIdentity;
-		outgoingServer.setCharValue("hostname", prefs.getCharPref("smtp.hostname"));
-		outgoingServer.setIntValue("port", prefs.getIntPref("imap.port"));*/
-		
+
+		var imapKey = incomingServer.key;
+		var smtpKey = outgoingServer.smtpServerKey;
+
+		var imapHostname = imapBranch.getCharPref("hostname");
+		var imapPort = imapBranch.getIntPref("port");
+		var smtpHostname = smtpBranch.getCharPref("hostname");
+		var smtpPort = smtpBranch.getIntPref("port");
+
+		imapBranch = prefs.getBranch("mail.server." +  imapKey + ".");
+		smtpBranch = prefs.getBranch("mail.smtpserver." +  smtpKey + ".");
+
+		imapBranch.setCharPref("hostname", imapHostname);
+		imapBranch.setIntPref("port", imapPort);
+
+		smtpBranch.setCharPref("hostname", smtpHostname);
+		smtpBranch.setIntPref("port", smtpPort);
+
 		this.eventHandler.onSuccess();
 		this.eventHandler.onStop();
 	}
