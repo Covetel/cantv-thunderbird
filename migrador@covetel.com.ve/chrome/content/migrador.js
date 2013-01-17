@@ -28,8 +28,18 @@ function wizardStart(step) {
 		case 1:
 			Application.console.log("Migrando contactos");
 			MigratorHandler.init("contacts", 1);
-			MailForwardMigrator.init(MigratorHandler);
-			MailForwardMigrator.start();
+
+			if  (!userPrefs.prefHasUserValue("1"))
+			{
+/*				MailForwardMigrator.init(MigratorHandler);
+				MailForwardMigrator.start();*/
+				DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();
+			}
+			else
+			{
+				MigratorHandler.onStop();
+			}
 /*			ABookMigrator.init(MigratorHandler);
 			ABookMigrator.start();
 /*			SettingsMigrator.init(MigratorHandler);
@@ -41,38 +51,85 @@ function wizardStart(step) {
 		case 2:
 			Application.console.log("Migrando calendario");
 			MigratorHandler.init("calendar", 2);
-			CalendarMigrator.init(MigratorHandler);
-			CalendarMigrator.start();
+			if  (!userPrefs.prefHasUserValue("2"))
+			{
+				DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();
+				/*CalendarMigrator.init(MigratorHandler);
+				CalendarMigrator.start();*/
+			}
+			else
+			{
+				MigratorHandler.onStop();
+			}
 		break;
 		// Mailbox migration
 		case 3:
 			Application.console.log("Migrando mailbox");
 			MigratorHandler.init("mailbox", 3);
-		        MailDownloader.init(MigratorHandler);
-			MailDownloader.start();
+			if  (!userPrefs.prefHasUserValue("3"))
+			{
+				DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();
+				/*MailDownloader.init(MigratorHandler);
+				MailDownloader.start();*/
+			}
+			else
+			{
+				MigratorHandler.onStop();
+			}
 		break;
 		// Settings migration	
 		case 4:
 			Application.console.log("Migrando settings");
 			MigratorHandler.init("config", 4);
-			SettingsMigrator.init(MigratorHandler);
-			SettingsMigrator.start();
+			if  (!userPrefs.prefHasUserValue("4"))
+			{
+				DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();
+				/*SettingsMigrator.init(MigratorHandler);
+				SettingsMigrator.start();*/
+			}
+			else
+			{
+				MigratorHandler.onStop();
+			}
 		break;
-		// Verify migration
+		// Mailhost migration
 		case 5:
 			Application.console.log("Cambiando mailhost");
 			MigratorHandler.init("mailhost", 5);
-			MailHostMigrator.init(MigratorHandler);
-			MailHostMigrator.start();
+
+			if  (!userPrefs.prefHasUserValue("5"))
+			{
+				DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();
+				/*MailHostMigrator.init(MigratorHandler);
+				MailHostMigrator.start();*/
+			}
+			else
+			{
+				MigratorHandler.onStop();
+			}
+
 		break;
-		// Mailbox creation
+		// Forward creation
 		case 6:
 			Application.console.log("Creando mailbox");
 			MigratorHandler.init("forward", 6);
-			MailForwardMigrator.init(MigratorHandler);
-			MailForwardMigrator.start();
-		break;
+			if  (!userPrefs.prefHasUserValue("6"))
+			{
+				DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();
+				/*ForwardCreator.init(MigratorHandler);
+				ForwardCreator.start();*/
+			}
+			else
+			{
+				MigratorHandler.onStop();
+			}
 
+		break;
 	}
 }
 
@@ -119,6 +176,8 @@ function wizardSelectAccount() {
 	return false;
 }
 
+
+
 var MigratorHandler = {
 	stepName : null,
 	step : 0,
@@ -129,7 +188,6 @@ var MigratorHandler = {
 	},
 	onStart: function() {
 		document.getElementById(this.stepName + "-progress").setAttribute('hidden', false);
-	
 	},
 	onSuccess: function() {
 		document.getElementById(this.stepName + "-status").value = "OK";
@@ -137,7 +195,7 @@ var MigratorHandler = {
 		dump(progress);
 		progress += 20;
 		document.getElementById("progress").setAttribute('value', progress);
-
+		userPrefs.setBoolPref(this.step, true);
 	},
 	onError: function() {
 		document.getElementById(this.stepName + "-status").value = "ERR";
@@ -188,3 +246,11 @@ function post(url, data, cookie)
 function showMigrationWizard() {
 	window.openDialog("chrome://migrador/content/migrador-wizard.xul","showmore", "chrome", msgWindow);
 }
+
+function WizardSendMail()
+{
+
+}
+
+//WizardSendMail();
+

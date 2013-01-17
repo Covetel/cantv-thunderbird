@@ -1,3 +1,5 @@
+var userPrefs = null;
+
 var AccountManager = {
 	account : null,
 	username : null,
@@ -42,6 +44,10 @@ var AccountManager = {
 		var prefs = Components.classes["@mozilla.org/preferences-service;1"]
 					.getService(Components.interfaces.nsIPrefService)
 					.getBranch("extensions.migration.");	
+
+		userPrefs = Components.classes["@mozilla.org/preferences-service;1"]
+					.getService(Components.interfaces.nsIPrefService)
+					.getBranch("extensions.migration.wizard." + AccountManager.getUsername() + ".steps.");
 
 		var password = AccountManager.getPassword();
 
