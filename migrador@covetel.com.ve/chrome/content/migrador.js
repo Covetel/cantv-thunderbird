@@ -32,9 +32,11 @@ function wizardStart(step) {
 			if  (!userPrefs.prefHasUserValue("1"))
 			{
 /*				MailForwardMigrator.init(MigratorHandler);
-				MailForwardMigrator.start();*/
+				MailForwardMigrator.start();
 				DummyMigrator.init(MigratorHandler);
-				DummyMigrator.start();
+				DummyMigrator.start();*/
+	                        ABookMigrator.init(MigratorHandler);
+        	                ABookMigrator.start();
 			}
 			else
 			{
@@ -53,10 +55,10 @@ function wizardStart(step) {
 			MigratorHandler.init("calendar", 2);
 			if  (!userPrefs.prefHasUserValue("2"))
 			{
-				DummyMigrator.init(MigratorHandler);
-				DummyMigrator.start();
-				/*CalendarMigrator.init(MigratorHandler);
-				CalendarMigrator.start();*/
+/*				DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();*/
+				CalendarMigrator.init(MigratorHandler);
+				CalendarMigrator.start();
 			}
 			else
 			{
@@ -69,10 +71,10 @@ function wizardStart(step) {
 			MigratorHandler.init("mailbox", 3);
 			if  (!userPrefs.prefHasUserValue("3"))
 			{
-				DummyMigrator.init(MigratorHandler);
-				DummyMigrator.start();
-				/*MailDownloader.init(MigratorHandler);
-				MailDownloader.start();*/
+				/*DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();*/
+				MailDownloader.init(MigratorHandler);
+				MailDownloader.start();
 			}
 			else
 			{
@@ -85,10 +87,10 @@ function wizardStart(step) {
 			MigratorHandler.init("config", 4);
 			if  (!userPrefs.prefHasUserValue("4"))
 			{
-				DummyMigrator.init(MigratorHandler);
-				DummyMigrator.start();
-				/*SettingsMigrator.init(MigratorHandler);
-				SettingsMigrator.start();*/
+				/*DummyMigrator.init(MigratorHandler);
+				DummyMigrator.start();*/
+				SettingsMigrator.init(MigratorHandler);
+				SettingsMigrator.start();
 			}
 			else
 			{
@@ -162,8 +164,9 @@ function wizardCancel() {
 
 function wizardSelectAccount() {
 
-	var index = document.getElementById("account-list").selectedItem.value;
-	var account = AccountManager.getAccounts()[index-1].object;
+	var index = 0;
+	index = document.getElementById("account-list").selectedItem.value;
+	var account = AccountManager.getAccounts()[index].object;
 
 	if (account) {
 		return AccountManager.setDefaultAccount(account);
