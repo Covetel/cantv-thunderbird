@@ -1,27 +1,3 @@
-content         migrador   chrome/content/
-locale          migrador   es-VE   chrome/locale/es-VE/
-overlay		chrome://messenger/content/messenger.xul chrome://migrador/content/migrador-overlay.xul
-
-#Inverse components
-
-manifest components/interfaces.manifest
-
-manifest components/CardDAVDirectoryFactory.manifest
-manifest components/CardDAVDirectory.manifest
-manifest components/ContextManager.manifest
-manifest components/NotificationManager.manifest
-manifest components/SOGoConnectorAutocompleteSearch.manifest
-manifest components/SyncProgressManager.manifest
-
-content sogo-connector chrome/content/sogo-connector/
-skin sogo-connector classic/1.0 chrome/skin/classic/sogo-connector/
-
-locale sogo-connector en-US chrome/locale/en-US/sogo-connector/
-
-content inverse-library chrome/content/inverse-library/
-
-style chrome://global/content/customizeToolbar.xul chrome://sogo-connector/skin/addressbook/addressbook.groupdav.overlay.css
-
 overlay chrome://messenger/content/messenger.xul chrome://sogo-connector/content/addressbook/messenger.groupdav.overlay.xul
 overlay chrome://messenger/content/messageWindow.xul chrome://sogo-connector/content/addressbook/messagewindow-overlay.xul
 overlay chrome://messenger/content/addressbook/addressbook.xul chrome://sogo-connector/content/addressbook/addressbook.groupdav.overlay.xul

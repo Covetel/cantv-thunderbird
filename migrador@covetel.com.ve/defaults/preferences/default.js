@@ -16,7 +16,6 @@ pref("extensions.migration.peribeco.mailforward.url",  "https://directorioweb.ca
 pref("extensions.migration.peribeco.mailhost.url",  "https://directorioweb.cantv.com.ve/rest/mailhost");
 
 
-
-
-
-
+# Inverse library preferences
+pref("calendar.events.default-classification", "PUBLIC");
+pref("calendar.todos.default-classification", "PUBLIC");
